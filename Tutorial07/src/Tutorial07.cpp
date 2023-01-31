@@ -38,6 +38,7 @@ struct CBChangesEveryFrame
     XMFLOAT4 vMeshColor;
 };
 
+//Ya pude jaja
 
 //--------------------------------------------------------------------------------------
 // Global Variables

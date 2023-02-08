@@ -83,6 +83,7 @@ XMMATRIX                            g_View;
 XMMATRIX                            g_Projection;
 XMFLOAT4                            g_vMeshColor( 0.7f, 0.7f, 0.7f, 1.0f );
 //Personaje_Atributo PA;
+Camera cam;
 
 //--------------------------------------------------------------------------------------
 // Forward declarations
@@ -92,6 +93,7 @@ HRESULT InitDevice();
 void CleanupDevice();
 LRESULT CALLBACK    WndProc( HWND, UINT, WPARAM, LPARAM );
 void Render();
+void update();
 
 //Esta funcion esta encargada de inicializar todos los datos en el proyecto
 void init()
@@ -99,11 +101,6 @@ void init()
 
 }
 
-// Esta funcion se encarga de actualizar la LOGICA del programa
-void update()
-{
-
-}
 
 // Se encarga de actualizar los datos en pantalla
 void render()
@@ -493,6 +490,7 @@ HRESULT InitDevice()
     if( FAILED( hr ) )
         return hr;*/
 
+    //-----Creacion 1-----
     bd.Usage = D3D11_USAGE_DEFAULT;
     bd.ByteWidth = sizeof(Camera);
     bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -534,26 +532,31 @@ HRESULT InitDevice()
     XMVECTOR Up = XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
     g_View = XMMatrixLookAtLH( Eye, At, Up );
 
-    Camera cam;
+    
 
     //CBNeverChanges cbNeverChanges;
     //cbNeverChanges.mView = XMMatrixTranspose( g_View );
     //g_pImmediateContext->UpdateSubresource( g_pCBNeverChanges, 0, nullptr, &cbNeverChanges, 0, 0 );
 
-    // Initialize the projection matrix
-    g_Projection = XMMatrixPerspectiveFovLH( XM_PIDIV4, width / (FLOAT)height, 0.01f, 100.0f );
-    
     //CBChangeOnResize cbChangesOnResize;
     //cbChangesOnResize.mProjection = XMMatrixTranspose( g_Projection );
     //g_pImmediateContext->UpdateSubresource( g_pCBChangeOnResize, 0, nullptr, &cbChangesOnResize, 0, 0 );
-    
-    cam.mView = XMMatrixTranspose(g_View);
-    cam.mProjection = XMMatrixTranspose(g_Projection);
-    g_pImmediateContext->UpdateSubresource(g_Camera, 0, nullptr, &cam, 0, 0);
 
+    //----Creacion Logica 2-----
+    // Initialize the projection matrix
+    g_Projection = XMMatrixPerspectiveFovLH( XM_PIDIV4, width / (FLOAT)height, 0.01f, 100.0f );
+    // Guarda la info
+    cam.mView = XMMatrixTranspose(g_View);
+    cam.mProjection = XMMatrixTranspose(g_Projection); // informavion en la pantalla 
+    
     return S_OK;
 }
 
+// Esta funcion se encarga de actualizar la LOGICA del programa
+void update()
+{
+    g_pImmediateContext->UpdateSubresource(g_Camera, 0, nullptr, &cam, 0, 0); // se pueden ver cambios en los obj
+}
 
 //--------------------------------------------------------------------------------------
 // Clean up the objects we've created
@@ -566,6 +569,7 @@ void CleanupDevice()
     if( g_pTextureRV ) g_pTextureRV->Release();
     //if( g_pCBNeverChanges ) g_pCBNeverChanges->Release();
     //if( g_pCBChangeOnResize ) g_pCBChangeOnResize->Release();
+    if (g_Camera)g_Camera->Release(); //-----Destruir 4------
     if( g_pCBChangesEveryFrame ) g_pCBChangesEveryFrame->Release();
     if( g_pVertexBuffer ) g_pVertexBuffer->Release();
     if( g_pIndexBuffer ) g_pIndexBuffer->Release();
@@ -661,9 +665,10 @@ void Render()
     g_pImmediateContext->VSSetShader( g_pVertexShader, nullptr, 0 );
     //g_pImmediateContext->VSSetConstantBuffers( 0, 1, &g_pCBNeverChanges );
     //g_pImmediateContext->VSSetConstantBuffers( 1, 1, &g_pCBChangeOnResize );
-    g_pImmediateContext->VSSetConstantBuffers( 2, 1, &g_pCBChangesEveryFrame );
+    g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_Camera);  //------Presentar en pantalla 3------
+    g_pImmediateContext->VSSetConstantBuffers(1, 1, &g_pCBChangesEveryFrame );
     g_pImmediateContext->PSSetShader( g_pPixelShader, nullptr, 0 );
-    g_pImmediateContext->PSSetConstantBuffers( 2, 1, &g_pCBChangesEveryFrame );
+    g_pImmediateContext->PSSetConstantBuffers( 1, 1, &g_pCBChangesEveryFrame );
     g_pImmediateContext->PSSetShaderResources( 0, 1, &g_pTextureRV );
     g_pImmediateContext->PSSetSamplers( 0, 1, &g_pSamplerLinear );
     g_pImmediateContext->DrawIndexed( 36, 0, 0 );

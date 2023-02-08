@@ -39,5 +39,11 @@
     <None Include="bin\Tutorial07.fx">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="src\CTime.cpp">
+      <Filter>src</Filter>
+    </None>
+    <None Include="Include\CTime.h">
+      <Filter>Include</Filter>
+    </None>
   </ItemGroup>
 </Project>

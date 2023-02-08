@@ -11,6 +11,8 @@
 #include <d3dcompiler.h>
 #include <xnamath.h>
 #include "Resource.h"
+#include <vector>
+#include "Time.h"
 
 
 //--------------------------------------------------------------------------------------

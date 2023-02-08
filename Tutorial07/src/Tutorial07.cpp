@@ -310,7 +310,7 @@ HRESULT InitDevice()
     if( FAILED( hr ) )
         return hr;
 
-    g_pImmediateContext->OMSetRenderTargets( 1, &g_pRenderTargetView, g_pDepthStencilView );
+    g_pImmediateContext->OMSetRenderTargets( 1, &g_pRenderTargetView, g_pDepthStencilView ); // dibujado en obj
 
     // Setup the viewport
     D3D11_VIEWPORT vp;
@@ -557,19 +557,23 @@ void update()
             dwTimeStart = dwTimeCur;
         t = (dwTimeCur - dwTimeStart) / 1000.0f;
     }
-
-    // Rotate cube around the origin
-    g_World = XMMatrixScaling(1, 1, 1) * XMMatrixRotationY(t) * XMMatrixTranslation(0, 0, 0);
-
-    g_pImmediateContext->UpdateSubresource(g_Camera, 0, nullptr, &cam, 0, 0); // se pueden ver cambios en los obj
+    
+    //g_vMeshColor = XMFLOAT4(1, 1, 1, 1);
 
     //
     // Update variables that change once per frame
     //
+    // Rotate cube around the origin
+    g_World = XMMatrixScaling(1, 1, 1) * XMMatrixRotationY(t) * XMMatrixTranslation(0, 0, 0);
     CBChangesEveryFrame cb;
     cb.mWorld = XMMatrixTranspose(g_World);
     cb.vMeshColor = g_vMeshColor;
+
+    //Update Data
+    // Update Mash buffer
     g_pImmediateContext->UpdateSubresource(g_pCBChangesEveryFrame, 0, nullptr, &cb, 0, 0);
+    //Update Camera buffers
+    g_pImmediateContext->UpdateSubresource(g_Camera, 0, nullptr, &cam, 0, 0); // se pueden ver cambios en los obj
 }
 
 //--------------------------------------------------------------------------------------
@@ -637,7 +641,7 @@ void Render()
    /* g_vMeshColor.x = ( sinf( t * 1.0f ) + 1.0f ) * 0.5f;
     g_vMeshColor.y = ( cosf( t * 3.0f ) + 1.0f ) * 0.5f;
     g_vMeshColor.z = ( sinf( t * 5.0f ) + 1.0f ) * 0.5f;*/
-    g_vMeshColor = XMFLOAT4(1, 1, 1, 1);
+    
 
     //
     // Clear the back buffer
@@ -650,7 +654,7 @@ void Render()
     //
     g_pImmediateContext->ClearDepthStencilView( g_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0 );
 
-    
+    //DivaisConteX
 
     //
     // Render the cube

@@ -94,22 +94,10 @@ void CleanupDevice();
 LRESULT CALLBACK    WndProc( HWND, UINT, WPARAM, LPARAM );
 void Render();
 void update();
+void Destroy();
 
 //Esta funcion esta encargada de inicializar todos los datos en el proyecto
 void init()
-{
-
-}
-
-
-// Se encarga de actualizar los datos en pantalla
-void render()
-{
-
-}
-
-// Se encarga de liberar los recursos utilizados del programa
-void Destroy()
 {
 
 }
@@ -129,7 +117,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
     if( FAILED( InitDevice() ) )
     {
-        CleanupDevice();
+        Destroy();
         return 0;
     }
 
@@ -149,7 +137,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
         }
     }
 
-    CleanupDevice();
+    Destroy();
 
     return ( int )msg.wParam;
 }
@@ -555,13 +543,39 @@ HRESULT InitDevice()
 // Esta funcion se encarga de actualizar la LOGICA del programa
 void update()
 {
+    // Update our time
+    static float t = 0.0f;
+    if (g_driverType == D3D_DRIVER_TYPE_REFERENCE)
+    {
+        t += (float)XM_PI * 0.0125f;
+    }
+    else
+    {
+        static DWORD dwTimeStart = 0;
+        DWORD dwTimeCur = GetTickCount();
+        if (dwTimeStart == 0)
+            dwTimeStart = dwTimeCur;
+        t = (dwTimeCur - dwTimeStart) / 1000.0f;
+    }
+
+    // Rotate cube around the origin
+    g_World = XMMatrixScaling(1, 1, 1) * XMMatrixRotationY(t) * XMMatrixTranslation(0, 0, 0);
+
     g_pImmediateContext->UpdateSubresource(g_Camera, 0, nullptr, &cam, 0, 0); // se pueden ver cambios en los obj
+
+    //
+    // Update variables that change once per frame
+    //
+    CBChangesEveryFrame cb;
+    cb.mWorld = XMMatrixTranspose(g_World);
+    cb.vMeshColor = g_vMeshColor;
+    g_pImmediateContext->UpdateSubresource(g_pCBChangesEveryFrame, 0, nullptr, &cb, 0, 0);
 }
 
 //--------------------------------------------------------------------------------------
 // Clean up the objects we've created
 //--------------------------------------------------------------------------------------
-void CleanupDevice()
+void Destroy()
 {
     if( g_pImmediateContext ) g_pImmediateContext->ClearState();
 
@@ -617,28 +631,13 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 //--------------------------------------------------------------------------------------
 void Render()
 {
-    // Update our time
-    static float t = 0.0f;
-    if( g_driverType == D3D_DRIVER_TYPE_REFERENCE )
-    {
-        t += ( float )XM_PI * 0.0125f;
-    }
-    else
-    {
-        static DWORD dwTimeStart = 0;
-        DWORD dwTimeCur = GetTickCount();
-        if( dwTimeStart == 0 )
-            dwTimeStart = dwTimeCur;
-        t = ( dwTimeCur - dwTimeStart ) / 1000.0f;
-    }
-
-    // Rotate cube around the origin
-    g_World = XMMatrixRotationY( t );
+    
 
     // Modify the color
-    g_vMeshColor.x = ( sinf( t * 1.0f ) + 1.0f ) * 0.5f;
+   /* g_vMeshColor.x = ( sinf( t * 1.0f ) + 1.0f ) * 0.5f;
     g_vMeshColor.y = ( cosf( t * 3.0f ) + 1.0f ) * 0.5f;
-    g_vMeshColor.z = ( sinf( t * 5.0f ) + 1.0f ) * 0.5f;
+    g_vMeshColor.z = ( sinf( t * 5.0f ) + 1.0f ) * 0.5f;*/
+    g_vMeshColor = XMFLOAT4(1, 1, 1, 1);
 
     //
     // Clear the back buffer
@@ -651,13 +650,7 @@ void Render()
     //
     g_pImmediateContext->ClearDepthStencilView( g_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0 );
 
-    //
-    // Update variables that change once per frame
-    //
-    CBChangesEveryFrame cb;
-    cb.mWorld = XMMatrixTranspose( g_World );
-    cb.vMeshColor = g_vMeshColor;
-    g_pImmediateContext->UpdateSubresource( g_pCBChangesEveryFrame, 0, nullptr, &cb, 0, 0 );
+    
 
     //
     // Render the cube

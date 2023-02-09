@@ -1,10 +1,9 @@
 #include "CTime.h"
 
+
+
 CTime::CTime()
 {
-	m_iCurrentTime;
-	m_iLastTime;
-	m_iTimerFrequency;
 }
 
 CTime::~CTime()

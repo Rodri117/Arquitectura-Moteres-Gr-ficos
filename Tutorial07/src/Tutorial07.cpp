@@ -10,16 +10,10 @@
 // Proyecto 1
 // 
 //--------------------------------------------------------------------------------------
-#include <windows.h>
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d3dcompiler.h>
-#include <xnamath.h>
-#include "Resource.h"
-#include < vector >
-#include "CTime.h"
-#define WINDOWS
 
+#include "Prerequisities.h"
+#include "CTime.h"
+CTime g_time;
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -87,10 +81,11 @@ XMMATRIX                            g_View;
 XMMATRIX                            g_Projection;
 XMFLOAT4                            g_vMeshColor(0.7f, 0.7f, 0.7f, 1.0f);
 Camera cam;
-float movementSpeed = 150.0f;
+float movementSpeed = 170.0f;
 static float t = 0.0f;
-CTime g_time;
-Vector3 Position;
+
+
+Vector3 v3Position;
 float speed;
 
 //--------------------------------------------------------------------------------------
@@ -100,7 +95,7 @@ HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow);
 HRESULT InitDevice();
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 void Render();
-void update(float deltaTime);
+void update();
 //Funcion encargada de liberar los recursos utilizados en el programa
 void destroy();
 
@@ -136,8 +131,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     }
 
     //inicializamos el tiempo
-    g_time.init();
-
     // Main message loop
     MSG msg = { 0 };
     while (WM_QUIT != msg.message)
@@ -149,8 +142,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
         }
         else
         {
-            g_time.update();
-            update(g_time.m_fDeltaTime);
+            update();
             Render();
         }
     }
@@ -360,32 +352,14 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     }
 
     // Define the input layout
-    D3D11_INPUT_ELEMENT_DESC layout[] =
-    {
-        {   "POSITION",                          // Nombre -> Identifica la estuctura del shader
-            0,                                   // Semantica -> mas semantic name igual
-            DXGI_FORMAT_R32G32B32_FLOAT,         // formato -> Clasifica dato
-            0,                                   // input slot -> revisa si existe mas de un vertexbuffer
-            D3D11_APPEND_ALIGNED_ELEMENT,        // Analiza el espacio en memoria
-            D3D11_INPUT_PER_VERTEX_DATA,         // Se configura que tipo de dato esta asignando
-            0                                    // Actualizacion de datos
-        },
-        {   "TEXCOORD",
-            0,
-            DXGI_FORMAT_R32G32_FLOAT,
-            0,
-            D3D11_APPEND_ALIGNED_ELEMENT/*12*/,
-            D3D11_INPUT_PER_VERTEX_DATA,
-            0
-        },
-    };
+    
 
     std::vector<D3D11_INPUT_ELEMENT_DESC> Layout;
 
     D3D11_INPUT_ELEMENT_DESC position;
     position.SemanticName = "POSITION";
     position.SemanticIndex = 0;
-    position.Format = DXGI_FORMAT_R32G32_FLOAT;
+    position.Format = DXGI_FORMAT_R32G32B32_FLOAT;
     position.InputSlot = 0;
     position.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT/*12*/;
     position.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
@@ -402,7 +376,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     texcoord.InstanceDataStepRate = 0;
     Layout.push_back(texcoord);
 
-    UINT numElements = ARRAYSIZE(layout);
+    
 
     // Create the input layout
     hr = g_pd3dDevice->CreateInputLayout(Layout.data(), Layout.size(), pVSBlob->GetBufferPointer(),
@@ -544,6 +518,11 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     if (FAILED(hr))
         return hr;
 
+    bd.ByteWidth = sizeof(Camera);
+    hr = g_pd3dDevice->CreateBuffer(&bd, nullptr, &g_Camera);
+    if (FAILED(hr))
+        return hr;
+
     bd.ByteWidth = sizeof(CBChangesEveryFrame);
     hr = g_pd3dDevice->CreateBuffer(&bd, nullptr, &g_pCBChangesEveryFrame);
     if (FAILED(hr))
@@ -598,23 +577,11 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
 }
 
 // Esta funcion se encarga de actualizar la LOGICA del programa
+
 void update()
 {
     // Update our time
-    static float t = 0.0f;
-    if (g_driverType == D3D_DRIVER_TYPE_REFERENCE)
-    {
-        t += (float)XM_PI * 0.0125f;
-    }
-    else
-    {
-        static DWORD dwTimeStart = 0;
-        DWORD dwTimeCur = GetTickCount();
-        if (dwTimeStart == 0)
-            dwTimeStart = dwTimeCur;
-        t = (dwTimeCur - dwTimeStart) / 1000.0f;
-    }
-
+    
     //Modify the color
     g_vMeshColor.x = (sinf(t * 1.0f) + 1.0f) * 0.5f;
     g_vMeshColor.y = (cosf(t * 3.0f) + 1.0f) * 0.5f;
@@ -626,7 +593,8 @@ void update()
     // Update variables that change once per frame
     //
     // Rotate cube around the origin
-    g_World = XMMatrixScaling(1, 1, 1) * XMMatrixRotationY(t) * XMMatrixTranslation(0, 0, 0);
+    g_World = XMMatrixScaling(.5f, .5f, .5f) * XMMatrixRotationY(t) * XMMatrixTranslation(v3Position.x, v3Position.y, v3Position.z);
+    //g_World = XMMatrixScaling(1, 1, 1) * XMMatrixRotationY(t) * XMMatrixTranslation(0, 0, 0);
 
     CBChangesEveryFrame cb;
     cb.mWorld = XMMatrixTranspose(g_World);

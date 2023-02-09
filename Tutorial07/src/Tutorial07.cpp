@@ -16,8 +16,8 @@
 #include <d3dcompiler.h>
 #include <xnamath.h>
 #include "Resource.h"
+//#include "Time.h"
 #include <vector>
-#include "Time.h"
 #define WINDOWS
 
 
@@ -366,11 +366,34 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
             0 
         },
     };
+
+    std::vector<D3D11_INPUT_ELEMENT_DESC> Layout;
+
+    D3D11_INPUT_ELEMENT_DESC position;
+    position.SemanticName = "POSITION";
+    position.SemanticIndex = 0;
+    position.Format = DXGI_FORMAT_R32G32_FLOAT; 
+    position.InputSlot = 0;
+    position.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT/*12*/;
+    position.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+    position.InstanceDataStepRate = 0;
+    Layout.push_back(position);
+
+    D3D11_INPUT_ELEMENT_DESC texcoord;
+    texcoord.SemanticName = "TEXCOORD";
+    texcoord.SemanticIndex = 0;
+    texcoord.Format = DXGI_FORMAT_R32G32_FLOAT;
+    texcoord.InputSlot = 0;
+    texcoord.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT/*12*/;
+    texcoord.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+    texcoord.InstanceDataStepRate = 0;
+    Layout.push_back(texcoord);
+
     UINT numElements = ARRAYSIZE( layout );
 
     // Create the input layout
-    hr = g_pd3dDevice->CreateInputLayout( layout, numElements, pVSBlob->GetBufferPointer(),
-                                          pVSBlob->GetBufferSize(), &g_pVertexLayout );
+    hr = g_pd3dDevice->CreateInputLayout(Layout.data(), Layout.size(), pVSBlob->GetBufferPointer(),
+        pVSBlob->GetBufferSize(), &g_pVertexLayout );
     pVSBlob->Release();
     if( FAILED( hr ) )
         return hr;
@@ -444,6 +467,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     // Set vertex buffer
     UINT stride = sizeof( SimpleVertex );
     UINT offset = 0;
+    // parte que va en el render
     g_DeviceContext->IASetVertexBuffers( 0, 1, &g_pVertexBuffer, &stride, &offset );
 
     // Create index buffer
@@ -626,6 +650,7 @@ void destroy()
 
 //--------------------------------------------------------------------------------------
 // Called every time the application receives a message
+// Parametros de Movimiento Cubo
 //--------------------------------------------------------------------------------------
 LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {

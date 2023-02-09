@@ -602,6 +602,11 @@ void update()
         t = (dwTimeCur - dwTimeStart) / 1000.0f;
     }
     
+    //Modify the color
+    g_vMeshColor.x = (sinf(t * 1.0f) + 1.0f) * 0.5f;
+    g_vMeshColor.y = (cosf(t * 3.0f) + 1.0f) * 0.5f;
+    g_vMeshColor.z = (sinf(t * 5.0f) + 1.0f) * 0.5f;
+
     //g_vMeshColor = XMFLOAT4(1, 1, 1, 1);
 
     //

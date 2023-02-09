@@ -34,6 +34,9 @@
     <ClInclude Include="Include\Resource.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Prerequisities.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\CTime.cpp">

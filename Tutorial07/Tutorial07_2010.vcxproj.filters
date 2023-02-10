@@ -23,6 +23,9 @@
     <ClCompile Include="src\Tutorial07.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\RTime.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -37,14 +40,11 @@
     <ClInclude Include="Include\Prerequisities.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="Include\RTime.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\CTime.cpp">
-      <Filter>src</Filter>
-    </None>
-    <None Include="Include\CTime.h">
-      <Filter>Include</Filter>
-    </None>
     <None Include="bin\Tutorial07.fx">
       <Filter>Shaders</Filter>
     </None>

@@ -12,8 +12,8 @@
 //--------------------------------------------------------------------------------------
 
 #include "Prerequisities.h"
-#include "CTime.h"
-CTime g_time;
+#include "RTime.h"
+
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -50,6 +50,13 @@ struct Vector3
 
 };
 
+struct Transform
+{
+    Vector3 Position;
+    Vector3 Rotation;
+    Vector3 Scale;
+};
+
 //Ya pude jaja
 
 //--------------------------------------------------------------------------------------
@@ -59,34 +66,34 @@ HINSTANCE                           g_hInst = nullptr;
 HWND                                g_hWnd = nullptr;
 D3D_DRIVER_TYPE                     g_driverType = D3D_DRIVER_TYPE_NULL;
 D3D_FEATURE_LEVEL                   g_featureLevel = D3D_FEATURE_LEVEL_11_0;
-ID3D11Device* g_pd3dDevice = nullptr;
-ID3D11DeviceContext* g_pImmediateContext = nullptr;
-IDXGISwapChain* g_pSwapChain = nullptr;
-ID3D11RenderTargetView* g_pRenderTargetView = nullptr;
-ID3D11Texture2D* g_pDepthStencil = nullptr;
-ID3D11DepthStencilView* g_pDepthStencilView = nullptr;
-ID3D11VertexShader* g_pVertexShader = nullptr;
-ID3D11PixelShader* g_pPixelShader = nullptr;
-ID3D11InputLayout* g_pVertexLayout = nullptr;
-ID3D11Buffer* g_pVertexBuffer = nullptr;
-ID3D11Buffer* g_pIndexBuffer = nullptr;
-ID3D11Buffer* g_Camera = nullptr;
+ID3D11Device*                       g_pd3dDevice = nullptr;
+ID3D11DeviceContext*                g_pImmediateContext = nullptr;
+IDXGISwapChain*                     g_pSwapChain = nullptr;
+ID3D11RenderTargetView*             g_pRenderTargetView = nullptr;
+ID3D11Texture2D*                    g_pDepthStencil = nullptr;
+ID3D11DepthStencilView*             g_pDepthStencilView = nullptr;
+ID3D11VertexShader*                 g_pVertexShader = nullptr;
+ID3D11PixelShader*                  g_pPixelShader = nullptr;
+ID3D11InputLayout*                  g_pVertexLayout = nullptr;
+ID3D11Buffer*                       g_pVertexBuffer = nullptr;
+ID3D11Buffer*                       g_pIndexBuffer = nullptr;
+ID3D11Buffer*                       g_Camera = nullptr;
 //ID3D11Buffer*                       g_pCBNeverChanges = nullptr;
 //ID3D11Buffer*                       g_pCBChangeOnResize = nullptr;
-ID3D11Buffer* g_pCBChangesEveryFrame = nullptr;
-ID3D11ShaderResourceView* g_pTextureRV = nullptr;
-ID3D11SamplerState* g_pSamplerLinear = nullptr;
+ID3D11Buffer*                       g_pCBChangesEveryFrame = nullptr;
+ID3D11ShaderResourceView*           g_pTextureRV = nullptr;
+ID3D11SamplerState*                 g_pSamplerLinear = nullptr;
 XMMATRIX                            g_World;
 XMMATRIX                            g_View;
 XMMATRIX                            g_Projection;
 XMFLOAT4                            g_vMeshColor(0.7f, 0.7f, 0.7f, 1.0f);
 Camera cam;
+
 float movementSpeed = 170.0f;
-static float t = 0.0f;
-
-
+//static float t = 2.0f;
 Vector3 v3Position;
 float speed;
+RTime g_time;
 
 //--------------------------------------------------------------------------------------
 // Forward declarations
@@ -95,7 +102,7 @@ HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow);
 HRESULT InitDevice();
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 void Render();
-void update();
+void update(float deltaTime);
 //Funcion encargada de liberar los recursos utilizados en el programa
 void destroy();
 
@@ -123,7 +130,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
     if (FAILED(InitWindow(hInstance, nCmdShow)))
         return 0;
-
+        
     if (FAILED(InitDevice()))
     {
         destroy();
@@ -131,6 +138,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     }
 
     //inicializamos el tiempo
+    g_time.init();
     // Main message loop
     MSG msg = { 0 };
     while (WM_QUIT != msg.message)
@@ -142,7 +150,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
         }
         else
         {
-            update();
+            g_time.uptade();
+            update(g_time.m_deltaTime);
             Render();
         }
     }
@@ -578,33 +587,36 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
 
 // Esta funcion se encarga de actualizar la LOGICA del programa
 
-void update()
+void update(float deltaTime)
 {
     // Update our time
     
     //Modify the color
-    g_vMeshColor.x = (sinf(t * 1.0f) + 1.0f) * 0.5f;
-    g_vMeshColor.y = (cosf(t * 3.0f) + 1.0f) * 0.5f;
-    g_vMeshColor.z = (sinf(t * 5.0f) + 1.0f) * 0.5f;
+    g_vMeshColor.x = (sinf(deltaTime * 1.0f) + 1.0f) * 0.5f;
+    g_vMeshColor.y = (cosf(deltaTime * 3.0f) + 1.0f) * 0.5f;
+    g_vMeshColor.z = (sinf(deltaTime * 5.0f) + 1.0f) * 0.5f;
 
-    //g_vMeshColor = XMFLOAT4(1, 1, 1, 1);
+    g_vMeshColor = XMFLOAT4(1, 1, 1, 1);
 
+    speed += .02f;
     //
     // Update variables that change once per frame
     //
     // Rotate cube around the origin
-    g_World = XMMatrixScaling(.5f, .5f, .5f) * XMMatrixRotationY(t) * XMMatrixTranslation(v3Position.x, v3Position.y, v3Position.z);
+    g_World = XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixRotationY(speed * deltaTime) * XMMatrixTranslation(v3Position.x, v3Position.y, v3Position.z);
     //g_World = XMMatrixScaling(1, 1, 1) * XMMatrixRotationY(t) * XMMatrixTranslation(0, 0, 0);
-
     CBChangesEveryFrame cb;
     cb.mWorld = XMMatrixTranspose(g_World);
     cb.vMeshColor = g_vMeshColor;
 
-    //Update Data
+    
+    
     // Update Mash buffer
     g_pImmediateContext->UpdateSubresource(g_pCBChangesEveryFrame, 0, nullptr, &cb, 0, 0);
     //Update Camera buffers
     g_pImmediateContext->UpdateSubresource(g_Camera, 0, nullptr, &cam, 0, 0); // se pueden ver cambios en los obj
+    
+    
 }
 
 //--------------------------------------------------------------------------------------
@@ -652,6 +664,44 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_DESTROY:
         PostQuitMessage(0);
+        break;
+
+    case WM_KEYDOWN:
+
+        switch (wParam);
+        {
+        case 'W':
+            v3Position.y += speed * g_time.m_deltaTime;
+            break;
+
+        case 'S':
+            v3Position.y -= speed * g_time.m_deltaTime;
+            break;
+
+        case 'A':
+            v3Position.x -= speed * g_time.m_deltaTime;
+            break;
+
+        case 'D':
+            v3Position.x += speed * g_time.m_deltaTime;
+            break;
+
+        case '1':
+            g_vMeshColor = XMFLOAT4(0.7f, 0.1f, 0.2f, 0.0f);
+            break;
+            
+        case '2':
+            g_vMeshColor = XMFLOAT4(0.5f, 0.0f, 0.1f, 0.1f);
+            break;
+                
+        case '3':
+            g_vMeshColor = XMFLOAT4(0.2f, 0.5f, 0.0f, 0.0f);
+            break;
+
+        case '4':
+            g_vMeshColor = XMFLOAT4(0.3f, 0.1f, 0.7f, 0.1f);
+            break;
+        }
         break;
 
     default:

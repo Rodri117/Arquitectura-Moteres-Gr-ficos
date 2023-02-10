@@ -407,17 +407,15 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\RTime.cpp" />
     <ClCompile Include="src\Tutorial07.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Prerequisities.h" />
     <ClInclude Include="Include\Resource.h" />
+    <ClInclude Include="Include\RTime.h" />
     <CLInclude Include="resource.h" />
     <ResourceCompile Include="Tutorial07.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Include\CTime.h" />
-    <None Include="src\CTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Tutorial07.fx">

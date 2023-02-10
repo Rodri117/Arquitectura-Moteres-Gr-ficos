@@ -15,7 +15,6 @@ public:
 
 	void destroy();
 
-public:
 
 	float m_deltaTime;
 

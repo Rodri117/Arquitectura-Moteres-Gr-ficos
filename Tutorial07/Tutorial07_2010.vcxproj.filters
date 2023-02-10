@@ -43,6 +43,9 @@
     <ClInclude Include="Include\RTime.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Prerrequisitos.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Tutorial07.fx">

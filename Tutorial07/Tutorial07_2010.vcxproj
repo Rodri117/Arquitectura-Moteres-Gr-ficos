@@ -412,6 +412,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Prerequisities.h" />
+    <ClInclude Include="Include\Prerrequisitos.h" />
     <ClInclude Include="Include\Resource.h" />
     <ClInclude Include="Include\RTime.h" />
     <CLInclude Include="resource.h" />

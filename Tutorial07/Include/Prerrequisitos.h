@@ -1,24 +1,23 @@
 #pragma once
 
-//std lib
+// std Lib
 #include <iostream>
 #include <sstream>
 #include <vector>
 
-//External Lib
+//Ecternal Lib
 #include <d3d11.h>
 #include <d3dx11.h>
 #include <d3dcompiler.h>
 #include <xnamath.h>
 
 //Windows
-#include <Windows.h>
+#include <windows.h>
 
-//Internal Includes
-#include "resource.h"
+//Internal Includ
+#include "Resource.h"
 
-//Defines
-//Debug avanzado
+//Definir
 #define WINDOWS
 #define WARNING( s )						 \
 {											 \

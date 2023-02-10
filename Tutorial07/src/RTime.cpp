@@ -2,6 +2,9 @@
 
 RTime::RTime()
 {
+	m_currentTime;
+	m_lastTime;
+	m_timerFrequency;
 }
 
 RTime::~RTime()
@@ -17,9 +20,9 @@ void RTime::init()
 void RTime::uptade()
 {
 	QueryPerformanceCounter(&m_currentTime);
-	float deltaTime = (m_currentTime.QuadPart - m_lastTime.QuadPart) / (float)m_timerFrequency.QuadPart;
+	m_deltaTime = (m_currentTime.QuadPart - m_lastTime.QuadPart) / (float)m_timerFrequency.QuadPart;
 	m_lastTime = m_currentTime;
-	deltaTime = min(deltaTime, 0.1f);
+	m_deltaTime = min(m_deltaTime, 0.1f);
 }
 
 void RTime::render()

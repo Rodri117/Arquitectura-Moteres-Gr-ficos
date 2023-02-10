@@ -11,7 +11,7 @@
 // 
 //--------------------------------------------------------------------------------------
 
-#include "Prerequisities.h"
+#include "Prerrequisitos.h"
 #include "RTime.h"
 
 
@@ -50,12 +50,12 @@ struct Vector3
 
 };
 
-struct Transform
-{
-    Vector3 Position;
-    Vector3 Rotation;
-    Vector3 Scale;
-};
+//struct Transform
+//{
+//    Vector3 Position;
+//    Vector3 Rotation;
+//    Vector3 Scale;
+//};
 
 //Ya pude jaja
 
@@ -89,11 +89,13 @@ XMMATRIX                            g_Projection;
 XMFLOAT4                            g_vMeshColor(0.7f, 0.7f, 0.7f, 1.0f);
 Camera cam;
 
-float movementSpeed = 170.0f;
-//static float t = 2.0f;
+//Transform TCamera;
 Vector3 v3Position;
-float speed;
+//float movementSpeed = 70.0f;
+//static float t = 2.0f;
+float speed = 70.0f;
 RTime g_time;
+
 
 //--------------------------------------------------------------------------------------
 // Forward declarations
@@ -106,17 +108,12 @@ void update(float deltaTime);
 //Funcion encargada de liberar los recursos utilizados en el programa
 void destroy();
 
+//Inicializa todos los datos en pantalla
 void init()
 {
 
 }
 
-
-
-void render()
-{
-
-}
 
 
 //--------------------------------------------------------------------------------------
@@ -187,7 +184,7 @@ HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow)
     // Create window
 
     g_hInst = hInstance;
-    RECT rc = { 0, 0, 640, 480 };
+    RECT rc = { 0, 0, 980, 720 };
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
     g_hWnd = CreateWindow("TutorialWindowClass", "Direct3D 11 Tutorial 7", WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
@@ -318,7 +315,10 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     descDepth.MiscFlags = 0;
     hr = g_pd3dDevice->CreateTexture2D(&descDepth, nullptr, &g_pDepthStencil);
     if (FAILED(hr))
+    {
         return hr;
+    }
+        
 
     // Create the depth stencil view
     D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
@@ -587,29 +587,37 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
 
 // Esta funcion se encarga de actualizar la LOGICA del programa
 
+void Input(float deltaTime)
+{
+
+}
+
+float fScalation = 0.5f;
+
 void update(float deltaTime)
 {
     // Update our time
-    
+    Input(deltaTime);
+    //Rotacion del cubo
+    speed += .00003f;
     //Modify the color
     g_vMeshColor.x = (sinf(deltaTime * 1.0f) + 1.0f) * 0.5f;
     g_vMeshColor.y = (cosf(deltaTime * 3.0f) + 1.0f) * 0.5f;
     g_vMeshColor.z = (sinf(deltaTime * 5.0f) + 1.0f) * 0.5f;
 
-    g_vMeshColor = XMFLOAT4(1, 1, 1, 1);
+    //g_vMeshColor = XMFLOAT4(1, 1, 1, 1);
 
-    speed += .02f;
+    
     //
     // Update variables that change once per frame
     //
     // Rotate cube around the origin
-    g_World = XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixRotationY(speed * deltaTime) * XMMatrixTranslation(v3Position.x, v3Position.y, v3Position.z);
+    g_World = XMMatrixScaling(fScalation, fScalation, fScalation) * XMMatrixRotationY(speed) * XMMatrixTranslation(v3Position.x, v3Position.y, v3Position.z);
     //g_World = XMMatrixScaling(1, 1, 1) * XMMatrixRotationY(t) * XMMatrixTranslation(0, 0, 0);
-    CBChangesEveryFrame cb;
+    CBChangesEveryFrame cb; 
     cb.mWorld = XMMatrixTranspose(g_World);
     cb.vMeshColor = g_vMeshColor;
 
-    
     
     // Update Mash buffer
     g_pImmediateContext->UpdateSubresource(g_pCBChangesEveryFrame, 0, nullptr, &cb, 0, 0);
@@ -668,39 +676,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_KEYDOWN:
 
-        switch (wParam);
+        switch (wParam)
         {
         case 'W':
             v3Position.y += speed * g_time.m_deltaTime;
             break;
-
-        case 'S':
-            v3Position.y -= speed * g_time.m_deltaTime;
-            break;
-
-        case 'A':
-            v3Position.x -= speed * g_time.m_deltaTime;
-            break;
-
         case 'D':
             v3Position.x += speed * g_time.m_deltaTime;
             break;
-
-        case '1':
-            g_vMeshColor = XMFLOAT4(0.7f, 0.1f, 0.2f, 0.0f);
+        case 'A':
+            v3Position.x -= speed * g_time.m_deltaTime;
             break;
-            
-        case '2':
-            g_vMeshColor = XMFLOAT4(0.5f, 0.0f, 0.1f, 0.1f);
+        case 'S':
+            v3Position.y -= speed * g_time.m_deltaTime;
             break;
-                
-        case '3':
-            g_vMeshColor = XMFLOAT4(0.2f, 0.5f, 0.0f, 0.0f);
+        case 'I':
+            v3Position.z += speed * g_time.m_deltaTime;
             break;
-
-        case '4':
-            g_vMeshColor = XMFLOAT4(0.3f, 0.1f, 0.7f, 0.1f);
-            break;
+        case 'O':
+            v3Position.z -= speed * g_time.m_deltaTime;
+            break; 
+        
         }
         break;
 

@@ -28,7 +28,7 @@ struct SimpleVertex
     XMFLOAT2 Tex; // cordenadas de texturas
 };
 
-
+//vista del cuadro y cubo 
 struct Camera
 {
     XMMATRIX mView;
@@ -43,19 +43,13 @@ struct CBChangesEveryFrame
 
 struct Vector3
 {
-
+    //posicion de mi cubo
     float x = 0.0f;
     float y = 0.0f;
     float z = 0.0f;
 
 };
 
-//struct Transform
-//{
-//    Vector3 Position;
-//    Vector3 Rotation;
-//    Vector3 Scale;
-//};
 
 //Ya pude jaja
 
@@ -78,22 +72,19 @@ ID3D11InputLayout*                  g_pVertexLayout = nullptr;
 ID3D11Buffer*                       g_pVertexBuffer = nullptr;
 ID3D11Buffer*                       g_pIndexBuffer = nullptr;
 ID3D11Buffer*                       g_Camera = nullptr;
-//ID3D11Buffer*                       g_pCBNeverChanges = nullptr;
-//ID3D11Buffer*                       g_pCBChangeOnResize = nullptr;
+
 ID3D11Buffer*                       g_pCBChangesEveryFrame = nullptr;
 ID3D11ShaderResourceView*           g_pTextureRV = nullptr;
 ID3D11SamplerState*                 g_pSamplerLinear = nullptr;
 XMMATRIX                            g_World;
 XMMATRIX                            g_View;
 XMMATRIX                            g_Projection;
-XMFLOAT4                            g_vMeshColor(0.7f, 0.7f, 0.7f, 1.0f);
+XMFLOAT4                            g_vMeshColor(0.2f, 0.1f, 0.9f, 1.0f);
 Camera cam;
 
-//Transform TCamera;
+
 Vector3 v3Position;
-//float movementSpeed = 70.0f;
-//static float t = 2.0f;
-float speed = 70.0f;
+float speed = 117.0f;
 RTime g_time;
 
 
@@ -130,7 +121,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
         
     if (FAILED(InitDevice()))
     {
-        destroy();
+        destroy();         //destruye el lo que no se use para no saturar
         return 0;
     }
 
@@ -184,7 +175,7 @@ HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow)
     // Create window
 
     g_hInst = hInstance;
-    RECT rc = { 0, 0, 980, 720 };
+    RECT rc = { 0, 0, 980, 720 };     // tamaño de la vista de la ventana
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
     g_hWnd = CreateWindow("TutorialWindowClass", "Direct3D 11 Tutorial 7", WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
@@ -505,18 +496,6 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     g_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     // Create the constant buffers
-    /*bd.Usage = D3D11_USAGE_DEFAULT;
-    bd.ByteWidth = sizeof(CBNeverChanges);
-    bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-    bd.CPUAccessFlags = 0;
-    hr = g_pd3dDevice->CreateBuffer( &bd, nullptr, &g_pCBNeverChanges );
-    if( FAILED( hr ) )
-        return hr;
-
-    bd.ByteWidth = sizeof(CBChangeOnResize);
-    hr = g_pd3dDevice->CreateBuffer( &bd, nullptr, &g_pCBChangeOnResize );
-    if( FAILED( hr ) )
-        return hr;*/
 
         //-----Creacion 1-----
     bd.Usage = D3D11_USAGE_DEFAULT;
@@ -678,23 +657,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         switch (wParam)
         {
-        case 'W':
-            v3Position.y += speed * g_time.m_deltaTime;
+        case 'W':                                       //movimiento hacia arriba con la tecla W
+            v3Position.y += speed * g_time.m_deltaTime; //+= para el movimiento se debe multiplicar la velocidad x el tiempo
             break;
-        case 'D':
-            v3Position.x += speed * g_time.m_deltaTime;
+        case 'D':                                       //movimiento hacia la derecha con la tecla D
+            v3Position.x += speed * g_time.m_deltaTime; //+= para el movimiento se debe multiplicar la velocidad x el tiempo
             break;
-        case 'A':
-            v3Position.x -= speed * g_time.m_deltaTime;
+        case 'A':                                       //movimiento hacia la izquierda con la tecla A
+            v3Position.x -= speed * g_time.m_deltaTime; //-= para el movimiento se debe multiplicar la velocidad x el tiempo
             break;
-        case 'S':
-            v3Position.y -= speed * g_time.m_deltaTime;
+        case 'S':                                       //movimiento hacia abajo con la tecla S
+            v3Position.y -= speed * g_time.m_deltaTime; //-= para el movimiento se debe multiplicar la velocidad x el tiempo
             break;
-        case 'I':
-            v3Position.z += speed * g_time.m_deltaTime;
+        case 'I':                                       //se aleja el objeto con la tecla I
+            v3Position.z += speed * g_time.m_deltaTime; //+= para el movimiento se debe multiplicar la velocidad x el tiempo
             break;
-        case 'O':
-            v3Position.z -= speed * g_time.m_deltaTime;
+        case 'O':                                       //se a cerca el objeto con la tecla O
+            v3Position.z -= speed * g_time.m_deltaTime; //-= para el movimiento se debe multiplicar la velocidad x el tiempo
             break; 
         
         }
@@ -713,13 +692,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 //--------------------------------------------------------------------------------------
 void Render()
 {
-
-
-    /* Modify the color
-    g_vMeshColor.x = ( sinf( t * 1.0f ) + 1.0f ) * 0.5f;
-    g_vMeshColor.y = ( cosf( t * 3.0f ) + 1.0f ) * 0.5f;
-    g_vMeshColor.z = ( sinf( t * 5.0f ) + 1.0f ) * 0.5f;*/
-
 
     //
     // Clear the back buffer

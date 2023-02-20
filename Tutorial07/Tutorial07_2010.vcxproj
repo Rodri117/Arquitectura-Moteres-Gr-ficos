@@ -409,12 +409,14 @@
   <ItemGroup>
     <ClCompile Include="src\RTime.cpp" />
     <ClCompile Include="src\Tutorial07.cpp" />
+    <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Prerequisities.h" />
     <ClInclude Include="Include\Prerrequisitos.h" />
     <ClInclude Include="Include\Resource.h" />
     <ClInclude Include="Include\RTime.h" />
+    <ClInclude Include="Include\Window.h" />
     <CLInclude Include="resource.h" />
     <ResourceCompile Include="Tutorial07.rc" />
   </ItemGroup>

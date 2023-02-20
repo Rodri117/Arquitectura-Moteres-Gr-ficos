@@ -13,6 +13,7 @@
 
 #include "Prerrequisitos.h"
 #include "RTime.h"
+#include "Window.h"
 
 
 //--------------------------------------------------------------------------------------
@@ -56,6 +57,7 @@ struct Vector3
 //--------------------------------------------------------------------------------------
 // Global Variables
 //--------------------------------------------------------------------------------------
+
 HINSTANCE                           g_hInst = nullptr;
 HWND                                g_hWnd = nullptr;
 D3D_DRIVER_TYPE                     g_driverType = D3D_DRIVER_TYPE_NULL;
@@ -81,7 +83,7 @@ XMMATRIX                            g_View;
 XMMATRIX                            g_Projection;
 XMFLOAT4                            g_vMeshColor(0.2f, 0.1f, 0.9f, 1.0f);
 Camera cam;
-
+Window g_window;
 
 Vector3 v3Position;
 float speed = 117.0f;
@@ -254,7 +256,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     UINT numFeatureLevels = ARRAYSIZE(featureLevels);
 
     DXGI_SWAP_CHAIN_DESC sd;
-    ZeroMemory(&sd, sizeof(sd));
+    memset(&sd, 0, sizeof(sd));
     sd.BufferCount = 1;
     sd.BufferDesc.Width = width;
     sd.BufferDesc.Height = height;
@@ -291,7 +293,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
 
     // Create depth stencil texture
     D3D11_TEXTURE2D_DESC descDepth;
-    ZeroMemory(&descDepth, sizeof(descDepth));
+    memset(&descDepth, 0, sizeof(descDepth));
     descDepth.Width = width;
     descDepth.Height = height;
     descDepth.MipLevels = 1;
@@ -312,7 +314,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
 
     // Create the depth stencil view
     D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
-    ZeroMemory(&descDSV, sizeof(descDSV));
+    memset(&descDSV, 0, sizeof(descDSV));
     descDSV.Format = descDepth.Format;
     descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
     descDSV.Texture2D.MipSlice = 0;
@@ -438,13 +440,13 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     };
 
     D3D11_BUFFER_DESC bd;
-    ZeroMemory(&bd, sizeof(bd));
+    memset(&bd, 0, sizeof(bd));
     bd.Usage = D3D11_USAGE_DEFAULT;
     bd.ByteWidth = sizeof(SimpleVertex) * 24;
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
     bd.CPUAccessFlags = 0;
     D3D11_SUBRESOURCE_DATA InitData;
-    ZeroMemory(&InitData, sizeof(InitData));
+    memset(&InitData, 0, sizeof(InitData));
     InitData.pSysMem = vertices;
     hr = g_pd3dDevice->CreateBuffer(&bd, &InitData, &g_pVertexBuffer);
     if (FAILED(hr))
@@ -522,7 +524,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
 
     // Create the sample state
     D3D11_SAMPLER_DESC sampDesc;
-    ZeroMemory(&sampDesc, sizeof(sampDesc));
+    memset(&sampDesc, 0, sizeof(sampDesc));
     sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
     sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
     sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;

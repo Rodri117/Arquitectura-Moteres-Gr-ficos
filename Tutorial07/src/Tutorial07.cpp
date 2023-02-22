@@ -14,6 +14,7 @@
 #include "Prerrequisitos.h"
 #include "RTime.h"
 #include "Window.h"
+#include "DeviceContext.h"
 
 
 //--------------------------------------------------------------------------------------
@@ -63,7 +64,7 @@ HWND                                g_hWnd = nullptr;
 D3D_DRIVER_TYPE                     g_driverType = D3D_DRIVER_TYPE_NULL;
 D3D_FEATURE_LEVEL                   g_featureLevel = D3D_FEATURE_LEVEL_11_0;
 ID3D11Device*                       g_pd3dDevice = nullptr;
-ID3D11DeviceContext*                g_pImmediateContext = nullptr;
+ID3D11DeviceContext*                g_DeviceContext = nullptr;
 IDXGISwapChain*                     g_pSwapChain = nullptr;
 ID3D11RenderTargetView*             g_pRenderTargetView = nullptr;
 ID3D11Texture2D*                    g_pDepthStencil = nullptr;
@@ -84,6 +85,7 @@ XMMATRIX                            g_Projection;
 XMFLOAT4                            g_vMeshColor(0.2f, 0.1f, 0.9f, 1.0f);
 Camera cam;
 Window g_window;
+DeviceContext g_deviceContext;
 
 Vector3 v3Position;
 float speed = 117.0f;
@@ -273,7 +275,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     {
         g_driverType = driverTypes[driverTypeIndex];
         hr = D3D11CreateDeviceAndSwapChain(nullptr, g_driverType, nullptr, createDeviceFlags, featureLevels, numFeatureLevels,
-            D3D11_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice, &g_featureLevel, &g_pImmediateContext);
+            D3D11_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice, &g_featureLevel, &g_DeviceContext);
         if (SUCCEEDED(hr))
             break;
     }
@@ -322,7 +324,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     if (FAILED(hr))
         return hr;
 
-    g_pImmediateContext->OMSetRenderTargets(1, &g_pRenderTargetView, g_pDepthStencilView); // dibujado en obj
+    g_DeviceContext->OMSetRenderTargets(1, &g_pRenderTargetView, g_pDepthStencilView); // dibujado en obj
 
     // Setup the viewport
     D3D11_VIEWPORT vp;
@@ -332,7 +334,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     vp.MaxDepth = 1.0f;
     vp.TopLeftX = 0;
     vp.TopLeftY = 0;
-    g_pImmediateContext->RSSetViewports(1, &vp);
+    g_DeviceContext->RSSetViewports(1, &vp);
 
     // Compile the vertex shader
     ID3DBlob* pVSBlob = nullptr;
@@ -387,7 +389,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
         return hr;
 
     // Set the input layout
-    g_pImmediateContext->IASetInputLayout(g_pVertexLayout);
+    g_DeviceContext->IASetInputLayout(g_pVertexLayout);
 
     // Compile the pixel shader
     ID3DBlob* pPSBlob = nullptr;
@@ -456,7 +458,7 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
     UINT stride = sizeof(SimpleVertex);
     UINT offset = 0;
     // parte que va en el render
-    g_pImmediateContext->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
+    g_DeviceContext->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
 
     // Create index buffer
     // Create vertex buffer
@@ -491,10 +493,10 @@ HRESULT InitDevice() //Numero de aciento que toca en el cine
         return hr;
 
     // Set index buffer
-    g_pImmediateContext->IASetIndexBuffer(g_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
+    g_DeviceContext->IASetIndexBuffer(g_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
 
     // Set primitive topology
-    g_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    g_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     // Create the constant buffers
 
@@ -600,9 +602,9 @@ void update(float deltaTime)
 
     
     // Update Mash buffer
-    g_pImmediateContext->UpdateSubresource(g_pCBChangesEveryFrame, 0, nullptr, &cb, 0, 0);
+    g_DeviceContext->UpdateSubresource(g_pCBChangesEveryFrame, 0, nullptr, &cb, 0, 0);
     //Update Camera buffers
-    g_pImmediateContext->UpdateSubresource(g_Camera, 0, nullptr, &cam, 0, 0); // se pueden ver cambios en los obj
+    g_DeviceContext->UpdateSubresource(g_Camera, 0, nullptr, &cam, 0, 0); // se pueden ver cambios en los obj
     
     
 }
@@ -612,7 +614,7 @@ void update(float deltaTime)
 //--------------------------------------------------------------------------------------
 void destroy()
 {
-    if (g_pImmediateContext) g_pImmediateContext->ClearState();
+    if (g_DeviceContext) g_DeviceContext->ClearState();
 
     if (g_pSamplerLinear) g_pSamplerLinear->Release();
     if (g_pTextureRV) g_pTextureRV->Release();
@@ -629,7 +631,7 @@ void destroy()
     if (g_pDepthStencilView) g_pDepthStencilView->Release();
     if (g_pRenderTargetView) g_pRenderTargetView->Release();
     if (g_pSwapChain) g_pSwapChain->Release();
-    if (g_pImmediateContext) g_pImmediateContext->Release();
+    if (g_DeviceContext) g_DeviceContext->Release();
     if (g_pd3dDevice) g_pd3dDevice->Release();
 }
 
@@ -698,28 +700,28 @@ void Render()
     // Clear the back buffer
     //
     float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
-    g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
+    g_DeviceContext->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
 
     //
     // Clear the depth buffer to 1.0 (max depth)
     //
-    g_pImmediateContext->ClearDepthStencilView(g_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+    g_DeviceContext->ClearDepthStencilView(g_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
     //DivaisConteX
 
     //
     // Render the cube
     //
-    g_pImmediateContext->VSSetShader(g_pVertexShader, nullptr, 0);
+    g_DeviceContext->VSSetShader(g_pVertexShader, nullptr, 0);
     //g_DeviceContext->VSSetConstantBuffers( 0, 1, &g_pCBNeverChanges );
     //g_DeviceContext->VSSetConstantBuffers( 1, 1, &g_pCBChangeOnResize );
-    g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_Camera);  //------Presentar en pantalla 3------
-    g_pImmediateContext->VSSetConstantBuffers(1, 1, &g_pCBChangesEveryFrame);
-    g_pImmediateContext->PSSetShader(g_pPixelShader, nullptr, 0);
-    g_pImmediateContext->PSSetConstantBuffers(1, 1, &g_pCBChangesEveryFrame);
-    g_pImmediateContext->PSSetShaderResources(0, 1, &g_pTextureRV);
-    g_pImmediateContext->PSSetSamplers(0, 1, &g_pSamplerLinear);
-    g_pImmediateContext->DrawIndexed(36, 0, 0);
+    g_DeviceContext->VSSetConstantBuffers(0, 1, &g_Camera);  //------Presentar en pantalla 3------
+    g_DeviceContext->VSSetConstantBuffers(1, 1, &g_pCBChangesEveryFrame);
+    g_DeviceContext->PSSetShader(g_pPixelShader, nullptr, 0);
+    g_DeviceContext->PSSetConstantBuffers(1, 1, &g_pCBChangesEveryFrame);
+    g_DeviceContext->PSSetShaderResources(0, 1, &g_pTextureRV);
+    g_DeviceContext->PSSetSamplers(0, 1, &g_pSamplerLinear);
+    g_DeviceContext->DrawIndexed(36, 0, 0);
 
     //
     // Present our back buffer to our front buffer

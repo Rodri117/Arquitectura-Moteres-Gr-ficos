@@ -407,11 +407,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\DeviceContext.cpp" />
     <ClCompile Include="src\RTime.cpp" />
     <ClCompile Include="src\Tutorial07.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\DeviceContext.h" />
     <ClInclude Include="Include\Prerequisities.h" />
     <ClInclude Include="Include\Prerrequisitos.h" />
     <ClInclude Include="Include\Resource.h" />

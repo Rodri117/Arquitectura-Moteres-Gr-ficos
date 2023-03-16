@@ -1,4 +1,4 @@
-#include "Prerrequisitos.h"
+#include <Windows.h>
 #pragma once
 
 class

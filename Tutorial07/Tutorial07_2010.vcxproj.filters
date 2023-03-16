@@ -46,9 +46,6 @@
     <ClInclude Include="Include\Resource.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Prerequisities.h">
-      <Filter>Include</Filter>
-    </ClInclude>
     <ClInclude Include="Include\RTime.h">
       <Filter>Include</Filter>
     </ClInclude>
@@ -62,6 +59,30 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="Include\Device.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Commons.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\DepthStencilView.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\InputLayout.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\RenderTargetView.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SamplerState.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SwapChain.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Viewport.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Texture.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

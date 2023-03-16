@@ -414,12 +414,19 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Commons.h" />
+    <ClInclude Include="Include\DepthStencilView.h" />
     <ClInclude Include="Include\Device.h" />
     <ClInclude Include="Include\DeviceContext.h" />
-    <ClInclude Include="Include\Prerequisities.h" />
+    <ClInclude Include="Include\InputLayout.h" />
     <ClInclude Include="Include\Prerrequisitos.h" />
+    <ClInclude Include="Include\RenderTargetView.h" />
     <ClInclude Include="Include\Resource.h" />
     <ClInclude Include="Include\RTime.h" />
+    <ClInclude Include="Include\SamplerState.h" />
+    <ClInclude Include="Include\SwapChain.h" />
+    <ClInclude Include="Include\Texture.h" />
+    <ClInclude Include="Include\Viewport.h" />
     <ClInclude Include="Include\Window.h" />
     <CLInclude Include="resource.h" />
     <ResourceCompile Include="Tutorial07.rc" />

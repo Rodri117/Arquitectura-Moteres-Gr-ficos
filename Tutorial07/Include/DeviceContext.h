@@ -51,7 +51,7 @@ public:
 			ID3D11Buffer* const* ppConstantBuffer);
 	//
 	void
-	VSSetShader(ID3D11PixelShader* pPixelShader,
+	VSSetShader(ID3D11VertexShader* pVertexShader,
 			ID3D11ClassInstance* const* ppClassInstances,
 			unsigned int NumClassInstances);
 
@@ -80,7 +80,7 @@ public:
 		const unsigned int* pOffsets);
 	//
 	void
-	IASetVertextBuffer(ID3D11Buffer* pIndexBuffer,
+	IASetIndexBuffer(ID3D11Buffer* pIndexBuffer,
 			DXGI_FORMAT Format,
 			unsigned int Offset);
 	//

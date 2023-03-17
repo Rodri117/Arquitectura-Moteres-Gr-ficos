@@ -27,17 +27,17 @@ ________________________________________________________________________________
 . ABSTRACCION DE CLASES
 
 Las Clases tienen su .h y .cpp 
-# CTime
-# Window
-# Device
-# DeviceContext
-# Texture
-# DepthStencilView
-# InputLayout
-# SwapChain
-# RenderTargetView
-# Transform
-# SamplerState
-# Viewport
+- CTime
+- Window
+- Device
+- DeviceContext
+- Texture
+- DepthStencilView
+- InputLayout
+- SwapChain
+- RenderTargetView
+- Transform
+- SamplerState
+- Viewport
 
 ![dino](https://user-images.githubusercontent.com/107516968/218047349-6c3cba33-9206-4540-b0bd-f011becc215e.gif)

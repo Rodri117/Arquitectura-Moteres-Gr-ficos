@@ -32,13 +32,12 @@ DepthStencilView::update() {
 
 }
 
-void DepthStencilView::render(DeviceContext& deviceContext)
-{
-}
-
-void
-DepthStencilView::render() {
-
+void 
+DepthStencilView::render(DeviceContext& deviceContext){
+	deviceContext.ClearDepthStencilView(m_pDepthStencilView,
+		D3D11_CLEAR_DEPTH,
+		1.0f,
+		0);
 }
 
 void

@@ -18,6 +18,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{7d428a69-6a78-4fb5-8799-71922ff30a6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Imgui">
+      <UniqueIdentifier>{b40e0301-e3fd-4022-b242-dc2bc08fbbfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui\Includes">
+      <UniqueIdentifier>{2f4d5591-6b26-442d-81fd-5a2605076489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui\src">
+      <UniqueIdentifier>{771d465a-c17d-473f-a148-6579fa8e6479}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Tutorial07.cpp">
@@ -54,6 +63,45 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Viewport.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConstantBuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IndexBuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelLoader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UserInterface.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SwapChain.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking-znly-docking\imgui.cpp">
+      <Filter>Imgui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking-znly-docking\imgui_demo.cpp">
+      <Filter>Imgui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking-znly-docking\imgui_draw.cpp">
+      <Filter>Imgui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking-znly-docking\imgui_tables.cpp">
+      <Filter>Imgui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking-znly-docking\imgui_widgets.cpp">
+      <Filter>Imgui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking-znly-docking\backends\imgui_impl_dx11.cpp">
+      <Filter>Imgui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking-znly-docking\backends\imgui_impl_win32.cpp">
+      <Filter>Imgui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderProgram.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -108,6 +156,48 @@
     </ClInclude>
     <ClInclude Include="Include\Transform.h">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ConstantBuffer.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\IndexBuffer.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ModelLoader.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\OBJ_Loader.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\UserInterface.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\VertexBuffer.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking-znly-docking\imconfig.h">
+      <Filter>Imgui\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking-znly-docking\imgui.h">
+      <Filter>Imgui\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking-znly-docking\imgui_internal.h">
+      <Filter>Imgui\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking-znly-docking\imstb_rectpack.h">
+      <Filter>Imgui\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking-znly-docking\imstb_textedit.h">
+      <Filter>Imgui\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking-znly-docking\imstb_truetype.h">
+      <Filter>Imgui\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking-znly-docking\backends\imgui_impl_dx11.h">
+      <Filter>Imgui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking-znly-docking\backends\imgui_impl_win32.h">
+      <Filter>Imgui\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

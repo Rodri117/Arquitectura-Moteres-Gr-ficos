@@ -8,7 +8,10 @@ public:
 	~Window();
 
 	HRESULT
-		init(HINSTANCE hInstance, int nCmdShow, WNDPROC wndproc, LPCSTR windowName) {
+		init(HINSTANCE hInstance, 
+			int nCmdShow, 
+			WNDPROC wndproc, 
+			LPCSTR windowName) {
 
 	}
 
@@ -28,4 +31,5 @@ public:
 	unsigned int m_width;
 	unsigned int m_height;
 
+	LPCSTR m_windowName = "None";
 };

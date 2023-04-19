@@ -407,25 +407,50 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="imgui-docking-znly-docking\backends\imgui_impl_dx11.cpp" />
+    <ClCompile Include="imgui-docking-znly-docking\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="imgui-docking-znly-docking\imgui.cpp" />
+    <ClCompile Include="imgui-docking-znly-docking\imgui_demo.cpp" />
+    <ClCompile Include="imgui-docking-znly-docking\imgui_draw.cpp" />
+    <ClCompile Include="imgui-docking-znly-docking\imgui_tables.cpp" />
+    <ClCompile Include="imgui-docking-znly-docking\imgui_widgets.cpp" />
+    <ClCompile Include="src\ConstantBuffer.cpp" />
     <ClCompile Include="src\DepthStencilView.cpp" />
     <ClCompile Include="src\Device.cpp" />
     <ClCompile Include="src\DeviceContext.cpp" />
+    <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\InputLayout.cpp" />
+    <ClCompile Include="src\ModelLoader.cpp" />
     <ClCompile Include="src\RenderTargetView.cpp" />
     <ClCompile Include="src\RTime.cpp" />
     <ClCompile Include="src\SamplerState.cpp" />
+    <ClCompile Include="src\ShaderProgram.cpp" />
+    <ClCompile Include="src\SwapChain.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Tutorial07.cpp" />
+    <ClCompile Include="src\UserInterface.cpp" />
     <ClCompile Include="src\Viewport.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="imgui-docking-znly-docking\backends\imgui_impl_dx11.h" />
+    <ClInclude Include="imgui-docking-znly-docking\backends\imgui_impl_win32.h" />
+    <ClInclude Include="imgui-docking-znly-docking\imconfig.h" />
+    <ClInclude Include="imgui-docking-znly-docking\imgui.h" />
+    <ClInclude Include="imgui-docking-znly-docking\imgui_internal.h" />
+    <ClInclude Include="imgui-docking-znly-docking\imstb_rectpack.h" />
+    <ClInclude Include="imgui-docking-znly-docking\imstb_textedit.h" />
+    <ClInclude Include="imgui-docking-znly-docking\imstb_truetype.h" />
     <ClInclude Include="Include\Commons.h" />
+    <ClInclude Include="Include\ConstantBuffer.h" />
     <ClInclude Include="Include\DepthStencilView.h" />
     <ClInclude Include="Include\Device.h" />
     <ClInclude Include="Include\DeviceContext.h" />
+    <ClInclude Include="Include\IndexBuffer.h" />
     <ClInclude Include="Include\InputLayout.h" />
+    <ClInclude Include="Include\ModelLoader.h" />
+    <ClInclude Include="Include\OBJ_Loader.h" />
     <ClInclude Include="Include\Prerrequisitos.h" />
     <ClInclude Include="Include\RenderTargetView.h" />
     <ClInclude Include="Include\Resource.h" />
@@ -434,6 +459,8 @@
     <ClInclude Include="Include\SwapChain.h" />
     <ClInclude Include="Include\Texture.h" />
     <ClInclude Include="Include\Transform.h" />
+    <ClInclude Include="Include\UserInterface.h" />
+    <ClInclude Include="Include\VertexBuffer.h" />
     <ClInclude Include="Include\Viewport.h" />
     <ClInclude Include="Include\Window.h" />
     <CLInclude Include="resource.h" />

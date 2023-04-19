@@ -10,9 +10,27 @@
 //--------------------------------------------------------------------------------------
 
 #include "Prerrequisitos.h"
+#include "Commons.h"
+
 #include "RTime.h"
 #include "Window.h"
 #include "DeviceContext.h"
+#include "Device.h"
+#include "DepthStencilView.h"
+#include "Texture.h"
+#include "InputLayout.h"
+#include "SwapChain.h"
+#include "RenderTargetView.h"
+#include "Transform.h"
+#include "SamplerState.h"
+#include "Viewport.h"
+
+//3° Parcial
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "ModelLoader.h"
+#include "ShaderProgram.h"
+#include "ConstantBuffer.h"
 
 
 //--------------------------------------------------------------------------------------
@@ -57,6 +75,35 @@ struct Vector3
 // Global Variables
 //--------------------------------------------------------------------------------------
 
+Window                              g_window;
+DeviceContext                       g_deviceContext;
+Device                              g_device;
+DepthStencilView                    g_depthStencilView;
+Texture                             g_ModelTexture;
+Texture                             g_depthStencil;
+Texture                             g_backBuffer;
+
+SwapChain                           g_swapChain;
+RenderTargetView                    g_renderTargetView;
+SamplerState                        g_samplerState;
+Viewport                            g_viewport;
+Transform                           g_transform;
+RTime                               g_Time;
+
+Camera                              cam;
+VertexBuffer                        g_vertexBuffer;
+LoadData                            LD;
+IndexBuffer                         g_indexBuffer;
+ModelLoader                         g_modelLoader;
+ShaderProgram                       g_shaderProgram;
+
+ConstantBuffer                      g_constantBuffer;
+
+XMMATRIX                            g_World;
+XMMATRIX                            g_View;
+XMMATRIX                            g_Projection;
+XMFLOAT4                            g_vMeshColor(0.7f, 0.7f, 0.7f, 1.0f);
+
 HINSTANCE                           g_hInst = nullptr;
 HWND                                g_hWnd = nullptr;
 D3D_DRIVER_TYPE                     g_driverType = D3D_DRIVER_TYPE_NULL;
@@ -72,6 +119,7 @@ ID3D11PixelShader*                  g_pPixelShader = nullptr;
 ID3D11InputLayout*                  g_pVertexLayout = nullptr;
 ID3D11Buffer*                       g_pVertexBuffer = nullptr;
 ID3D11Buffer*                       g_pIndexBuffer = nullptr;
+
 ID3D11Buffer*                       g_Camera = nullptr;
 
 ID3D11Buffer*                       g_pCBChangesEveryFrame = nullptr;
@@ -190,6 +238,7 @@ HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow)
 }
 
 
+
 //--------------------------------------------------------------------------------------
 // Helper for compiling shaders with D3DX11
 //--------------------------------------------------------------------------------------
@@ -220,6 +269,8 @@ HRESULT CompileShaderFromFile(char* szFileName, LPCSTR szEntryPoint, LPCSTR szSh
 
     return S_OK;
 }
+
+
 
 
 //--------------------------------------------------------------------------------------
@@ -572,7 +623,9 @@ void Input(float deltaTime)
 
 }
 
-float fScalation = 0.5f;
+float fScalation = 0.5;
+
+
 
 void update(float deltaTime)
 {

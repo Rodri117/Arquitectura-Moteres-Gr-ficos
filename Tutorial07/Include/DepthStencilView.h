@@ -1,5 +1,5 @@
-#include "Prerrequisitos.h"
 #pragma once
+#include "Prerrequisitos.h"
 
 class 
 Device;
@@ -16,7 +16,9 @@ public:
 
 	//Se crea el DepthStencilView
 	void
-		init(Device device, ID3D11Resource* depthStencil, DXGI_FORMAT Format);
+		init(Device device, 
+			ID3D11Resource* depthStencil, 
+			DXGI_FORMAT Format);
 
 	void
 	update();

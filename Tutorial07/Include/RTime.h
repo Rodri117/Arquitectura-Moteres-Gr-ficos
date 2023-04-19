@@ -24,6 +24,7 @@ public:
 
 private:
 	
+	//Se encarga de tener la hora actual y operaciones con deltatime
 	LARGE_INTEGER m_currentTime;
 	LARGE_INTEGER m_lastTime;
 	LARGE_INTEGER m_timerFrequency;

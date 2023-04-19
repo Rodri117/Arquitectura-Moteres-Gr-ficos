@@ -4,7 +4,11 @@
 class 
 Device;
 
-class DepthStencilView {
+class
+DeviceContext;
+
+class 
+DepthStencilView {
 
 public:
 	DepthStencilView() = default;
@@ -18,7 +22,7 @@ public:
 	update();
 
 	void
-	render();
+	render(DeviceContext& deviceContext);
 
 	void
 	destroy();

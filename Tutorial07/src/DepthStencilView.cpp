@@ -32,6 +32,10 @@ DepthStencilView::update() {
 
 }
 
+void DepthStencilView::render(DeviceContext& deviceContext)
+{
+}
+
 void
 DepthStencilView::render() {
 

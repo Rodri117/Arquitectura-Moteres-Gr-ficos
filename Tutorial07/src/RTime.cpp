@@ -2,9 +2,9 @@
 
 RTime::RTime()
 {
-	m_currentTime;
-	m_lastTime;
-	m_timerFrequency;
+	m_iCurrentTime;
+	m_iLastTime;
+	m_iTimerFrequency;
 }
 
 RTime::~RTime(){
@@ -12,15 +12,15 @@ RTime::~RTime(){
 
 void RTime::init(){
 	//Se ajusta a la pantalla
-	QueryPerformanceCounter(&m_lastTime);
-	QueryPerformanceFrequency(&m_timerFrequency);
+	QueryPerformanceCounter(&m_iLastTime);
+	QueryPerformanceFrequency(&m_iTimerFrequency);
 }
 
 void RTime::uptade(){
-	QueryPerformanceCounter(&m_currentTime);
-	m_deltaTime = (m_currentTime.QuadPart - m_lastTime.QuadPart) / (float)m_timerFrequency.QuadPart;
-	m_lastTime = m_currentTime;
-	m_deltaTime = min(m_deltaTime, 0.1f);
+	QueryPerformanceCounter(&m_iCurrentTime);
+	m_fDeltaTime = (m_iCurrentTime.QuadPart - m_iLastTime.QuadPart) / (float)m_iTimerFrequency.QuadPart;
+	m_iLastTime = m_iCurrentTime;
+	m_fDeltaTime = min(m_fDeltaTime, 0.1f);
 }
 
 void RTime::render(){

@@ -2,23 +2,23 @@
 #include "Device.h"
 #include "DeviceContext.h"
 
-/*void
+void
 ConstantBuffer::init(Device device, unsigned int BythWidth) {
     if (device.m_device == nullptr) {
         WARNING("ERROR: ConstantBuffer::init : [CREATION OF RESOURCE : FALSE] [CHECK FOR Device device] \n");
         exit(1);
     }
-    else if (ByteWidth == 0) {
+    /*else if (ByteWidth == 0) {
         WARNING("ERROR: ConstantBuffer::init : [CREATION OF RESOURCE : FALSE] [CHECK FOR unsigned int ByteWidth] \n");
         exit(1);
-    }
+    }*/
 
     //Buffer modelo
     HRESULT hr = S_OK;
     D3D11_BUFFER_DESC ConstantBufferDesc;
     memset(&ConstantBufferDesc, 0, sizeof(ConstantBufferDesc));
     ConstantBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-    ConstantBufferDesc.ByteWidth = ByteWidth;
+    //ConstantBufferDesc.ByteWidth = ByteWidth;
     ConstantBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     ConstantBufferDesc.CPUAccessFlags = 0;
     hr = device.CreateBuffer(&ConstantBufferDesc, nullptr, &m_constantBuffer);
@@ -27,7 +27,7 @@ ConstantBuffer::init(Device device, unsigned int BythWidth) {
         exit(1);
     }
 
-}*/
+}
 
 void
 ConstantBuffer::update(DeviceContext& deviceContext,

@@ -5,6 +5,9 @@ class
 	Window;
 
 class
+	DeviceContext;
+
+class
 Viewport {
 public:
 	Viewport() = default;
@@ -17,7 +20,7 @@ public:
 		update();
 	
 	void
-		render();
+		render(DeviceContext& deviceContext);
 
 	void
 		destroy();

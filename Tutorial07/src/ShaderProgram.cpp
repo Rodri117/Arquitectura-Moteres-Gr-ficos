@@ -17,8 +17,11 @@ ShaderProgram::init(Device device,
     }
 
     m_shaderFileName = fileName;
+    
     CreateVertexShader(device);
+    
     CreateInputLayout(device, Layout);
+    
     CreatePixelShader(device);
 }
 
@@ -28,6 +31,7 @@ ShaderProgram::update() {
 
 void
 ShaderProgram::render(DeviceContext& deviceContext) {
+    
     deviceContext.IASetInputLayout(m_inputLayout.m_inputLayout);
     deviceContext.VSSetShader(m_VertexShader, nullptr, 0);
     deviceContext.PSSetShader(m_PixelShader, nullptr, 0);
@@ -35,7 +39,6 @@ ShaderProgram::render(DeviceContext& deviceContext) {
 
 void
 ShaderProgram::destroy() {
-
     SAFE_RELEASE(m_VertexShader);
     m_inputLayout.destroy();
     SAFE_RELEASE(m_PixelShader);
@@ -47,6 +50,7 @@ ShaderProgram::CompileShaderFromFile(const char* szFileName, LPCSTR szEntryPoint
 
     DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
+    
     dwShaderFlags |= D3DCOMPILE_DEBUG;
 #endif
 
@@ -70,7 +74,7 @@ ShaderProgram::CreateVertexShader(Device device) {
 
     HRESULT hr = S_OK;
 
-    //Compile the vertex Shader
+    
     hr = CompileShaderFromFile(m_shaderFileName.data(), "VS", "vs_4_0", &m_vertexShaderData);
     if (FAILED(hr)) {
         MessageBox(nullptr, "The FX file cannot be compiled. Please run this executablefrom the directorythat contains the FX file.", "Error", MB_OK);
@@ -96,7 +100,6 @@ ShaderProgram::CreateInputLayout(Device device,
     m_vertexShaderData->Release();
 }
 
-
 void
 ShaderProgram::CreatePixelShader(Device device) {
     HRESULT hr = S_OK;
@@ -107,7 +110,7 @@ ShaderProgram::CreatePixelShader(Device device) {
         exit(1);
     }
 
-    //create the pixel shader
+    
     hr = device.CreatePixelShader(m_pixelShaderData->GetBufferPointer(),
         m_pixelShaderData->GetBufferSize(),
         nullptr,

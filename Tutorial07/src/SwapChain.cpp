@@ -52,25 +52,6 @@ SwapChain::init(Device& device,
 
 	HRESULT hr = S_OK;
 
-	/*for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++) {
-		m_driverType = driverTypes[driverTypeIndex];
-		hr = D3D11CreateDeviceAndSwapChain(nullptr,
-			m_driverType,
-			nullptr,
-			createDeviceFlags,
-			featureLevels,
-			numFeatureLevels,
-			D3D11_SDK_VERSION,
-			&sd,
-			&m_swapChain,
-			&device.m_device,
-			&m_featureLevel,
-			&deviceContext.m_deviceContext);
-
-		if (SUCCEEDED(hr)) {
-			break;
-		}
-	}*/
 
 	if (FAILED(hr)) {
 		WARNING("ERROR: SwapChain::init : [CREATION OF RESOURCE : FALSE] [CHECK FOR D3D11CreateDeviceAndSwapChain()] \n");

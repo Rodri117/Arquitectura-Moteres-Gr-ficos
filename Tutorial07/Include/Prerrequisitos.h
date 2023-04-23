@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <string>
 
 //Ecternal Lib
 #include <d3d11.h>

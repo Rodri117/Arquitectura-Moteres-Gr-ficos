@@ -5,6 +5,9 @@
 class Device;
 
 class
+	DeviceContext;
+
+class
 ShaderProgram {
 public:
 	ShaderProgram() = default;
@@ -25,7 +28,7 @@ public:
 		destroy();
 
 	HRESULT
-		CompileShaderFronFile(char* szFileName,
+		CompileShaderFromFile(char* szFileName,
 			LPCSTR szEntryPoint,
 			LPCSTR szShaderModel,
 			ID3DBlob** ppBlobOut);

@@ -5,6 +5,9 @@
 class
 Device;
 
+class
+	DeviceContext;
+
 class 
 Texture{
 public:
@@ -27,7 +30,7 @@ public:
 		update();
 
 	void
-		render();
+		render(DeviceContext& deviceContext);
 
 	void
 		destroy();

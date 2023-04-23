@@ -7,6 +7,12 @@ class
 	Texture;
 
 class
+	DeviceContext;
+
+class 
+	DepthStencilView;
+
+class
 RenderTargetView {
 public:
 	RenderTargetView() = default;
@@ -19,7 +25,7 @@ public:
 	update();
 
 	void
-	render();
+	render(DeviceContext& deviceContext, DepthStencilView& depthStencilView);
 
 	void
 	destroy();

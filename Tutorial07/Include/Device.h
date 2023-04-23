@@ -5,7 +5,7 @@ class
 Device {
 public:
 	Device() = default;
-	~Device() {};
+	~Device() { SAFE_RELEASE(m_device) };
 
 	void 
 	init();

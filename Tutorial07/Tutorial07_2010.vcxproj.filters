@@ -199,6 +199,9 @@
     <ClInclude Include="imgui-docking-znly-docking\backends\imgui_impl_win32.h">
       <Filter>Imgui\src</Filter>
     </ClInclude>
+    <ClInclude Include="Include\ShaderProgram.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Tutorial07.fx">

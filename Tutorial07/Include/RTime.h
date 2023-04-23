@@ -20,16 +20,16 @@ public:
 	destroy();
 
 
-	float m_deltaTime;
-
 private:
 	
-	//Se encarga de tener la hora actual y operaciones con deltatime
-	LARGE_INTEGER m_currentTime;
-	LARGE_INTEGER m_lastTime;
-	LARGE_INTEGER m_timerFrequency;
+	LARGE_INTEGER m_iCurrentTime;
+	
+	LARGE_INTEGER m_iLastTime;
+	
+	LARGE_INTEGER m_iTimerFrequency;
 
-public: 
-	float m_deltaTime;
+public:
+	
+	float m_fDeltaTime;
 };
 

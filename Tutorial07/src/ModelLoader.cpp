@@ -41,7 +41,6 @@ ModelLoader::load(std::string objFileName) {
 
         for (int i = 0; i < totalIndices; ++i) {
             
-
             LD.index[i] = Loader.LoadedIndices[i];
 
         }
@@ -55,4 +54,25 @@ ModelLoader::load(std::string objFileName) {
     }
 
     return LD;
+}
+
+void ModelLoader::
+init() {
+
+}
+
+
+void ModelLoader::
+update() {
+
+}
+
+void ModelLoader::
+render() {
+
+}
+
+void ModelLoader::
+destroy() {
+
 }

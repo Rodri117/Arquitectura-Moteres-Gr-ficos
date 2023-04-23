@@ -1,21 +1,21 @@
 #include "DepthStencilView.h"
 #include "Device.h"
+#include "DeviceContext.h"
 
 void
 DepthStencilView::init(Device device,
 	ID3D11Resource* depthStencil,
 	DXGI_FORMAT Format) {
-
 	if (device.m_device == nullptr) {
-		WARNING("ERROR: DepthStencilView::init : [CRATION OF RESOURCE : FALSE] [CHECK FOR Device device] \n");
+		WARNING("ERROR: DepthStencilView::init : [CREATION OF RESOURCE : FALSE] [CHECK FOR Device device] \n");
 		exit(1);
 	}
 	else if (depthStencil == nullptr) {
-		WARNING("ERROR: DepthStencilView::init : [CREATION OF RESOURCE : FALSE] [CHECK FOR ID3D11Resorce* depthStencil] \n")
+		WARNING("ERROR: DepthStencilView::init : [CREATION OF RESOURCE : FALSE] [CHECK FOR ID3D11Resource* depthStencil] \n");
 		exit(1);
 	}
 	else {
-		//se crea el deviceview
+		// Create the depth stencil view
 		D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
 		memset(&descDSV, 0, sizeof(descDSV));
 		descDSV.Format = Format;
@@ -24,21 +24,20 @@ DepthStencilView::init(Device device,
 
 		device.CreateDepthStencilView(depthStencil, &descDSV, &m_pDepthStencilView);
 	}
-
 }
 
 void
 DepthStencilView::update() {
-
 }
 
-void 
-DepthStencilView::render(DeviceContext& deviceContext){
+/*void
+DepthStencilView::render(DeviceContext& deviceContext) {
 	deviceContext.ClearDepthStencilView(m_pDepthStencilView,
 		D3D11_CLEAR_DEPTH,
 		1.0f,
 		0);
-}
+}*/
+
 
 void
 DepthStencilView::destroy() {

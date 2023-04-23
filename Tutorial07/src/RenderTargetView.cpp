@@ -1,6 +1,8 @@
 #include "RenderTargetView.h"
 #include "Device.h"
 #include "Texture.h"
+#include "DeviceContext.h"
+#include "DepthStencilView.h"
 
 void
 RenderTargetView::init(Device device,
@@ -29,8 +31,11 @@ RenderTargetView::update() {
 }
 
 void
-RenderTargetView::render() {
+RenderTargetView::render(DeviceContext& deviceContext, DepthStencilView& depthStencilView) {
+	float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
+	deviceContext.ClearRenderTargetView(m_renderTargetView, ClearColor);
 
+	deviceContext.OMSetRenderTarget(1, &m_renderTargetView, depthStencilView.m_pDepthStencilView);
 }
 
 void

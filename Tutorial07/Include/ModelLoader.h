@@ -4,7 +4,7 @@
 
 class 
 ModelLoader {
-
+public:
 	ModelLoader() = default;
 	~ModelLoader() {};
 

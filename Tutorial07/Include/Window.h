@@ -8,12 +8,10 @@ public:
 	~Window();
 
 	HRESULT
-		init(HINSTANCE hInstance, 
-			int nCmdShow, 
-			WNDPROC wndproc, 
-			LPCSTR windowName) {
-
-	}
+		init(HINSTANCE hInstance,
+			int nCmdShow,
+			WNDPROC wndproc,
+			LPCSTR windowName);
 
 	void
 	update();

@@ -1,7 +1,6 @@
-#include "Prerrequisitos.h"
 #pragma once
+#include "Prerrequisitos.h"
 
-//Esta es donde se declaracion la clase 
 class
 Device;
 

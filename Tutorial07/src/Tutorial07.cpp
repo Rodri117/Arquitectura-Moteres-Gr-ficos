@@ -1,9 +1,5 @@
 //--------------------------------------------------------------------------------------
 // File: Tutorial07.cpp
-//
-// This application demonstrates texturing
-//
-// Copyright (c) Microsoft Corporation. All rights reserved.
 // 
 // Rodrigo D.R
 // 
@@ -76,7 +72,7 @@ XMFLOAT4                            g_vMeshColor(0.7f, 0.7f, 0.7f, 1.0f);
 
 
 //--------------------------------------------------------------------------------------
-// Forward declarations
+//declarations
 //--------------------------------------------------------------------------------------
 HRESULT
 InitWindow(HINSTANCE hInstance, int nCmdShow);
@@ -97,7 +93,7 @@ WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    //Inicializamos la ventana
+    // la ventana
     if (FAILED(g_window.init(hInstance, nCmdShow, WndProc, "ChemasteR")))
         return 0;
 
@@ -106,12 +102,11 @@ WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, 
         return 0;
     }
 
-    //Inicializamos el tiempo
+    //tiempo
     g_Time.init();
-    //Inicializamos el transform
+    
     g_transform.init();
 
-    // Main message loop
     MSG msg = { 0 };
     while (WM_QUIT != msg.message) {
 
@@ -297,8 +292,7 @@ update() {
     ImGui::Text("ROTATION");
     ImGui::SliderFloat("Rotation X", &g_transform.m_v3Rotate.x, -6.0f, 6.0f);
     ImGui::SliderFloat("Rotation Y", &g_transform.m_v3Rotate.y, -6.0f, 6.0f);
-    //ImGui::SliderFloat("Position Y", &g_transform.m_v3Position.y, -2.0f, 2.0f);
-    //ImGui::SliderFloat("Position Z", &g_transform.m_v3Position.z, -2.0f, 2.0f);
+    
     ImGui::End();
 
     UI.vec3Control("Position", &g_transform.m_v3Position.x);

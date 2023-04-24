@@ -40,6 +40,6 @@ public:
 
 private:
 	D3D_DRIVER_TYPE m_drievrType = D3D_DRIVER_TYPE_NULL;
-	D3D_FEATURE_LEVEL m_deatureLevel = D3D_FEATURE_LEVEL_11_0;
+	D3D_FEATURE_LEVEL m_featureLevel = D3D_FEATURE_LEVEL_11_0;
 	IDXGISwapChain* m_swapChain = nullptr;
 };

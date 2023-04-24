@@ -32,9 +32,9 @@
 
 // * To check monster
 #define OutputLOG(_ClassName, _FunctionName, _OutputMessage)           \
-OutputDebugStringA(_ClassName);                                                          \
-OutputDebugStringA(" : In Function : ");                                          \
-OutputDebugStringA(_FunctionName);                                                    \
-OutputDebugStringA(" : ");                                                                \
-OutputDebugStringA(_OutputMessage);                                                    \
+OutputDebugStringA(_ClassName);                                        \
+OutputDebugStringA(" : In Function : ");                               \
+OutputDebugStringA(_FunctionName);                                     \
+OutputDebugStringA(" : ");                                             \
+OutputDebugStringA(_OutputMessage);                                    \
 OutputDebugStringA("\n");

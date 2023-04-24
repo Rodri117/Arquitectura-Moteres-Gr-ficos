@@ -136,7 +136,7 @@ namespace objl
 
 		//  Name
 		std::string name;
-		// Ambient Color
+		// Color
 		Vector3 Ka;
 		//  Color
 		Vector3 Kd;
@@ -520,7 +520,7 @@ namespace objl
 
 					TCoords.push_back(vtex);
 				}
-				// Generate a Vertex Normal;
+				
 				if (algorithm::firstToken(curline) == "vn")
 				{
 					std::vector<std::string> snor;
@@ -536,11 +536,11 @@ namespace objl
 				
 				if (algorithm::firstToken(curline) == "f")
 				{
-					// Generate the vertices
+					
 					std::vector<Vertex> vVerts;
 					GenVerticesFromRawOBJ(vVerts, Positions, TCoords, Normals, curline);
 
-					// Add Vertices
+					
 					for (int i = 0; i < int(vVerts.size()); i++)
 					{
 						Vertices.push_back(vVerts[i]);
@@ -552,7 +552,7 @@ namespace objl
 
 					VertexTriangluation(iIndices, vVerts);
 
-					// Add Indices
+					
 					for (int i = 0; i < int(iIndices.size()); i++)
 					{
 						unsigned int indnum = (unsigned int)((Vertices.size()) - vVerts.size()) + iIndices[i];
@@ -563,7 +563,7 @@ namespace objl
 
 					}
 				}
-				// Get Mesh Material Name
+				
 				if (algorithm::firstToken(curline) == "usemtl")
 				{
 					MeshMatNames.push_back(algorithm::tail(curline));
@@ -691,25 +691,25 @@ namespace objl
 
 			bool noNormal = false;
 
-			// For every given vertex do this
+			
 			for (int i = 0; i < int(sface.size()); i++)
 			{
-				// See What type the vertex is.
-				int vtype;
+				
+				int vtype{};
 
 				algorithm::split(sface[i], svert, "/");
 
-				// Check for just position - v1
+				
 				if (svert.size() == 1)
 				{
-					// Only position
+					
 					vtype = 1;
 				}
 
 				
 				if (svert.size() == 2)
 				{
-					// Position & Texture
+					
 					vtype = 2;
 				}
 
@@ -718,20 +718,20 @@ namespace objl
 				{
 					if (svert[1] != "")
 					{
-						// Position, Texture, and Normal
+						
 						vtype = 4;
 					}
 					else
 					{
-						// Position & Normal
+						
 						vtype = 3;
 					}
 				}
 
-				// Calculate and store the vertex
+				
 				switch (vtype)
 				{
-				case 1: // P
+				case 1: 
 				{
 					vVert.Position = algorithm::getElement(iPositions, svert[0]);
 					vVert.TextureCoordinate = Vector2(0, 0);
@@ -739,7 +739,7 @@ namespace objl
 					oVerts.push_back(vVert);
 					break;
 				}
-				case 2: // P/T
+				case 2: 
 				{
 					vVert.Position = algorithm::getElement(iPositions, svert[0]);
 					vVert.TextureCoordinate = algorithm::getElement(iTCoords, svert[1]);
@@ -747,7 +747,7 @@ namespace objl
 					oVerts.push_back(vVert);
 					break;
 				}
-				case 3: // P//N
+				case 3: 
 				{
 					vVert.Position = algorithm::getElement(iPositions, svert[0]);
 					vVert.TextureCoordinate = Vector2(0, 0);
@@ -755,7 +755,7 @@ namespace objl
 					oVerts.push_back(vVert);
 					break;
 				}
-				case 4: // P/T/N
+				case 4: 
 				{
 					vVert.Position = algorithm::getElement(iPositions, svert[0]);
 					vVert.TextureCoordinate = algorithm::getElement(iTCoords, svert[1]);

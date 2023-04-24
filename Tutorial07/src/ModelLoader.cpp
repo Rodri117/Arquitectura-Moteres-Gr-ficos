@@ -11,7 +11,6 @@ ModelLoader::load(std::string objFileName) {
 
     if (Model) {
         
-
         int totalVertices = Loader.LoadedVertices.size();
         int totalIndices = Loader.LoadedIndices.size();
         int loadedVertices = 0;
@@ -25,7 +24,6 @@ ModelLoader::load(std::string objFileName) {
 
         
         for (int i = 0; i < totalVertices; ++i) {
-            /*const objl::Vertex& vertex = vertices[i];*/
 
             LD.vertex[i].Pos.x = Loader.LoadedVertices[i].Position.X;
             LD.vertex[i].Pos.y = Loader.LoadedVertices[i].Position.Y;

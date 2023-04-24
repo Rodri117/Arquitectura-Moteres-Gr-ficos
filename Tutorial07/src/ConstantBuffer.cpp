@@ -42,7 +42,9 @@ ConstantBuffer::update(DeviceContext& deviceContext,
         SrcRowPitch, SrcDepthPitch);
 }
 
-
+void ConstantBuffer::render(DeviceContext& deviceContext)
+{
+}
 
 void
 ConstantBuffer::destroy() {

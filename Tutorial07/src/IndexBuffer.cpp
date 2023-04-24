@@ -37,6 +37,10 @@ IndexBuffer::init(Device device, LoadData loadData) {
     }
 }
 
+void IndexBuffer::update()
+{
+}
+
 void
 IndexBuffer::render(DeviceContext& deviceContext, unsigned int StartSlot) {
     deviceContext.IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);

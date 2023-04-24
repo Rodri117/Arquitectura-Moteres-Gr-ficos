@@ -37,6 +37,10 @@ VertexBuffer::init(Device device, LoadData loadData) {
     }
 }
 
+void VertexBuffer::update()
+{
+}
+
 void
 VertexBuffer::render(DeviceContext& deviceContext, unsigned int StartSlot) {
     deviceContext.IASetVertexBuffer(StartSlot, 1, &m_vertexBuffer, &m_stride, &m_offset);

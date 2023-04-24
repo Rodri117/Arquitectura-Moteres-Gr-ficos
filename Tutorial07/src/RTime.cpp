@@ -1,7 +1,6 @@
 #include "RTime.h"
 
-RTime::RTime()
-{
+RTime::RTime(){
 	m_iCurrentTime;
 	m_iLastTime;
 	m_iTimerFrequency;

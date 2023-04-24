@@ -19,7 +19,7 @@ RenderTargetView::init(Device device,
 	}
 
 	D3D11_RENDER_TARGET_VIEW_DESC desc = {};
-	desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	desc.Format = Format;
 	desc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 
 	device.CreateRenderTargetView(backBuffer.m_texture, &desc, &m_renderTargetView);

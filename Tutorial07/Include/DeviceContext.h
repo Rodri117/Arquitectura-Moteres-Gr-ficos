@@ -54,7 +54,12 @@ public:
 	VSSetShader(ID3D11VertexShader* pVertexShader,
 			ID3D11ClassInstance* const* ppClassInstances,
 			unsigned int NumClassInstances);
-
+	//
+	void
+	ClearDepthStencilView(ID3D11DepthStencilView* pDepthStencilView,
+			unsigned int ClearFlags,
+			float Depth,
+			unsigned int Stencil);
 	//
 	void
 	ClearRenderTargetView(ID3D11RenderTargetView* pRenderTargetView,

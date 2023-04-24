@@ -212,22 +212,19 @@ InitDevice() {
     Layout.push_back(texcoord);
 
 
-    // Create the input layout
-    //g_inputLayout.init(g_device, Layout, pVSBlob);
     g_shaderProgram.init(g_device, "Tutorial07.fx", Layout);
 
-    /*LD = g_ModelTexture*/
 
     LD = g_modelLoader.load("Pistol.obj");
 
-    //Set VertexBuffer
+    
     g_vertexBuffer.init(g_device, LD);
 
-    //INDEX BUFFER
+    
     g_indexBuffer.init(g_device, LD);
 
 
-    //Create the constant buffers
+    //constant buffers
     D3D11_BUFFER_DESC CamBufferDesc;
     memset(&CamBufferDesc, 0, sizeof(CamBufferDesc));
     CamBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -239,33 +236,33 @@ InitDevice() {
         return hr;
     }
 
-    //AQUÍ CREAMOS EL CBChanges
-    //Buffer modelo
+    
+    //Buffer 
     g_constantBuffer.init(g_device, sizeof(CBChangesEveryFrame));
 
 
-    // Load the Texture
-    g_ModelTexture.init(g_device, "GunAlbedo.dds");
+    
+    g_ModelTexture.init(g_device, "seafloor.dds");
 
-    //Create the sample state
+    
     g_samplerState.init(g_device);
 
-    // Initialize the world matrices
+    
     g_World = XMMatrixIdentity();
 
-    // Initialize the view matrix
+    
     XMVECTOR Eye = XMVectorSet(0.0f, 3.0f, -6.0f, 0.0f);
     XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
     XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
     g_View = XMMatrixLookAtLH(Eye, At, Up);
 
-    // Initialize the projection matrix (global)
+    
     g_Projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, g_window.m_width / (FLOAT)g_window.m_height, 0.01f, 100.0f);
 
     cam.mView = XMMatrixTranspose(g_View);
     cam.mProjection = XMMatrixTranspose(g_Projection);
 
-    //Initialize Classes
+    
     UI.init(g_window.m_hWnd, g_device.m_device, g_deviceContext.m_deviceContext);
 
     return S_OK;
@@ -314,17 +311,15 @@ update() {
             g_transform.m_v3Position.y,
             g_transform.m_v3Position.z);
 
-    // Update variables that change once per frame
+    
     CBChangesEveryFrame cb;
     cb.mWorld = XMMatrixTranspose(g_World);
     cb.vMeshColor = g_vMeshColor;
 
-    //Update Mesh Buffers
-    /*g_deviceContext.UpdateSubresource(g_pCBChangesEveryFrame, 0, nullptr, &cb, 0, 0);*/
-    //Aquí mandamos a llamar el update
+    
     g_constantBuffer.update(g_deviceContext, 0, nullptr, &cb, 0, 0);
 
-    //UpdateCamera Buffers
+    //UpdateCamera
     g_deviceContext.UpdateSubresource(g_Camera, 0, nullptr, &cam, 0, 0);
 
 

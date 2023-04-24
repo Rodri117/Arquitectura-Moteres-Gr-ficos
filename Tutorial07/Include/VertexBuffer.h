@@ -1,4 +1,3 @@
-
 #pragma once
 #include "Prerequisities.h"
 #include "Commons.h"

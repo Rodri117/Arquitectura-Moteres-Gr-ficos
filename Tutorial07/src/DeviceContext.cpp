@@ -70,6 +70,14 @@ DeviceContext::VSSetShader(ID3D11VertexShader* pVertexShader,
 }
 
 void
+DeviceContext::ClearDepthStencilView(ID3D11DepthStencilView* pDepthStencilView,
+	unsigned int ClearFlags,
+	float Depth,
+	unsigned int Stencil) {
+	m_deviceContext->ClearDepthStencilView(pDepthStencilView, ClearFlags, Depth, Stencil);
+}
+
+void
 DeviceContext::ClearRenderTargetView(ID3D11RenderTargetView* pRenderTargetView,
 	const float ColorRGBA[4]) {
 	m_deviceContext->ClearRenderTargetView(pRenderTargetView, ColorRGBA);

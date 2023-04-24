@@ -8,17 +8,17 @@ ConstantBuffer::init(Device device, unsigned int BythWidth) {
         WARNING("ERROR: ConstantBuffer::init : [CREATION OF RESOURCE : FALSE] [CHECK FOR Device device] \n");
         exit(1);
     }
-    /*else if (ByteWidth == 0) {
+    else if (BythWidth == 0) {
         WARNING("ERROR: ConstantBuffer::init : [CREATION OF RESOURCE : FALSE] [CHECK FOR unsigned int ByteWidth] \n");
         exit(1);
-    }*/
+    }
 
     //Buffer modelo
     HRESULT hr = S_OK;
     D3D11_BUFFER_DESC ConstantBufferDesc;
     memset(&ConstantBufferDesc, 0, sizeof(ConstantBufferDesc));
     ConstantBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-    //ConstantBufferDesc.ByteWidth = ByteWidth;
+    ConstantBufferDesc.ByteWidth = BythWidth;
     ConstantBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     ConstantBufferDesc.CPUAccessFlags = 0;
     hr = device.CreateBuffer(&ConstantBufferDesc, nullptr, &m_constantBuffer);
@@ -41,6 +41,8 @@ ConstantBuffer::update(DeviceContext& deviceContext,
         pDstBox, pSrcData,
         SrcRowPitch, SrcDepthPitch);
 }
+
+
 
 void
 ConstantBuffer::destroy() {
